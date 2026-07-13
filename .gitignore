@@ -1,1 +1,6 @@
 links.txt
+node_modules/
+.vscode/
+.DS_Store
+*.local
+dist/
