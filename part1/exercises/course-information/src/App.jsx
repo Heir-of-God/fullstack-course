@@ -1,3 +1,11 @@
+function Part(props) {
+  return (
+    <p>
+      {props.coursePart} {props.exercisesNumber}
+    </p>
+  );
+}
+
 function Header(props) {
   return <h1>{props.courseName}</h1>;
 }
@@ -5,15 +13,18 @@ function Header(props) {
 function Content(props) {
   return (
     <>
-      <p>
-        {props.coursePart1} {props.exercisesNumber1}
-      </p>
-      <p>
-        {props.coursePart2} {props.exercisesNumber2}
-      </p>
-      <p>
-        {props.coursePart3} {props.exercisesNumber3}
-      </p>
+      <Part
+        coursePart={props.coursePart1}
+        exercisesNumber={props.exercisesNumber1}
+      />
+      <Part
+        coursePart={props.coursePart2}
+        exercisesNumber={props.exercisesNumber2}
+      />
+      <Part
+        coursePart={props.coursePart3}
+        exercisesNumber={props.exercisesNumber3}
+      />
     </>
   );
 }
