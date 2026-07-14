@@ -1,24 +1,35 @@
-function Hello(props) {
-  console.log(props);
-  return (
-    <div>
-      <p>
-        Hello {props.name}, you are {props.age} years old
-      </p>
-    </div>
-  );
+import { useState } from "react";
+
+function Display({ counter }) {
+  return <div>{counter}</div>;
 }
 
+const Button = ({ onClick, text }) => {
+  return <button onClick={onClick}>{text}</button>;
+};
+
 function App() {
-  const name = "Peter";
-  const age = 10;
+  const [counter, setCounter] = useState(0);
+
+  function increaseByOne() {
+    setCounter(counter + 1);
+  }
+
+  function decreaseByOne() {
+    setCounter(counter - 1);
+  }
+
+  function setToZero() {
+    setCounter(0);
+  }
 
   return (
-    <div>
-      <h1>Greetings</h1>
-      <Hello name="some name1" age="10" />
-      <Hello name={name} age={age} />
-    </div>
+    <>
+      <Display counter={counter} />
+      <Button onClick={increaseByOne} text="Add" />
+      <Button onClick={decreaseByOne} text="Subtract" />
+      <Button onClick={setToZero} text="Reset" />
+    </>
   );
 }
 
