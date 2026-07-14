@@ -34,7 +34,7 @@ function Statistics({
   const positiveFeedbackPercantageText = "positive";
   const positiveFeedbackPercantage =
     goodCounter + badCounter + neutralCounter != 0
-      ? goodCounter / (goodCounter + badCounter + neutralCounter)
+      ? (goodCounter / (goodCounter + badCounter + neutralCounter)) * 100 + "%"
       : "undefined";
 
   return (
