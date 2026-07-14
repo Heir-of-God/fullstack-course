@@ -17,14 +17,13 @@ function StatisticsElement({ text, value }) {
   );
 }
 
-function App() {
-  const [goodCounter, setGoodCounter] = useState(0);
-  const [neutralCounter, setNeutralCounter] = useState(0);
-  const [badCounter, setBadCounter] = useState(0);
-
-  const appText = "Give feedback";
+function Statistics({
+  feedbackOptions,
+  goodCounter,
+  neutralCounter,
+  badCounter,
+}) {
   const statisticText = "Statistics";
-  const feedbackOptions = ["good", "neutral", "bad"];
 
   const averageText = "average";
   const average =
@@ -37,6 +36,29 @@ function App() {
     goodCounter + badCounter + neutralCounter != 0
       ? goodCounter / (goodCounter + badCounter + neutralCounter)
       : "undefined";
+
+  return (
+    <>
+      <Title titleText={statisticText} />
+      <StatisticsElement text={feedbackOptions[0]} value={goodCounter} />
+      <StatisticsElement text={feedbackOptions[1]} value={neutralCounter} />
+      <StatisticsElement text={feedbackOptions[2]} value={badCounter} />
+      <StatisticsElement text={averageText} value={average} />
+      <StatisticsElement
+        text={positiveFeedbackPercantageText}
+        value={positiveFeedbackPercantage}
+      />
+    </>
+  );
+}
+
+function App() {
+  const [goodCounter, setGoodCounter] = useState(0);
+  const [neutralCounter, setNeutralCounter] = useState(0);
+  const [badCounter, setBadCounter] = useState(0);
+
+  const appText = "Give feedback";
+  const feedbackOptions = ["good", "neutral", "bad"];
 
   function setGood(new_val) {
     setGoodCounter(new_val);
@@ -65,14 +87,11 @@ function App() {
         onClick={() => setBad(badCounter + 1)}
         text={feedbackOptions[2]}
       />
-      <Title titleText={statisticText} />
-      <StatisticsElement text={feedbackOptions[0]} value={goodCounter} />
-      <StatisticsElement text={feedbackOptions[1]} value={neutralCounter} />
-      <StatisticsElement text={feedbackOptions[2]} value={badCounter} />
-      <StatisticsElement text={averageText} value={average} />
-      <StatisticsElement
-        text={positiveFeedbackPercantageText}
-        value={positiveFeedbackPercantage}
+      <Statistics
+        feedbackOptions={feedbackOptions}
+        goodCounter={goodCounter}
+        neutralCounter={neutralCounter}
+        badCounter={badCounter}
       />
     </>
   );
