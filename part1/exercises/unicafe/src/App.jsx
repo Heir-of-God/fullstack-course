@@ -26,6 +26,18 @@ function App() {
   const statisticText = "Statistics";
   const feedbackOptions = ["good", "neutral", "bad"];
 
+  const averageText = "average";
+  const average =
+    goodCounter + badCounter + neutralCounter != 0
+      ? (goodCounter - badCounter) / (goodCounter + badCounter + neutralCounter)
+      : "undefined";
+
+  const positiveFeedbackPercantageText = "positive";
+  const positiveFeedbackPercantage =
+    goodCounter + badCounter + neutralCounter != 0
+      ? goodCounter / (goodCounter + badCounter + neutralCounter)
+      : "undefined";
+
   function setGood(new_val) {
     setGoodCounter(new_val);
   }
@@ -57,6 +69,11 @@ function App() {
       <StatisticsElement text={feedbackOptions[0]} value={goodCounter} />
       <StatisticsElement text={feedbackOptions[1]} value={neutralCounter} />
       <StatisticsElement text={feedbackOptions[2]} value={badCounter} />
+      <StatisticsElement text={averageText} value={average} />
+      <StatisticsElement
+        text={positiveFeedbackPercantageText}
+        value={positiveFeedbackPercantage}
+      />
     </>
   );
 }
