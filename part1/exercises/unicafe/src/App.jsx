@@ -25,6 +25,15 @@ function Statistics({
 }) {
   const statisticText = "Statistics";
 
+  if (goodCounter + neutralCounter + badCounter === 0) {
+    return (
+      <>
+        <Title titleText={statisticText} />
+        <StatisticsElement text="No feedback was given" value="" />
+      </>
+    );
+  }
+
   const averageText = "average";
   const average =
     goodCounter + badCounter + neutralCounter != 0
