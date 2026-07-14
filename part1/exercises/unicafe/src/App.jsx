@@ -11,9 +11,10 @@ function Button({ onClick, text }) {
 
 function StatisticsLine({ text, value }) {
   return (
-    <p>
-      {text} {value}
-    </p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 }
 
@@ -29,7 +30,7 @@ function Statistics({
     return (
       <>
         <Title titleText={statisticText} />
-        <StatisticsLine text="No feedback was given" value="" />
+        <p>No feedback was given</p>
       </>
     );
   }
@@ -49,14 +50,18 @@ function Statistics({
   return (
     <>
       <Title titleText={statisticText} />
-      <StatisticsLine text={feedbackOptions[0]} value={goodCounter} />
-      <StatisticsLine text={feedbackOptions[1]} value={neutralCounter} />
-      <StatisticsLine text={feedbackOptions[2]} value={badCounter} />
-      <StatisticsLine text={averageText} value={average} />
-      <StatisticsLine
-        text={positiveFeedbackPercantageText}
-        value={positiveFeedbackPercantage}
-      />
+      <table>
+        <tbody>
+          <StatisticsLine text={feedbackOptions[0]} value={goodCounter} />
+          <StatisticsLine text={feedbackOptions[1]} value={neutralCounter} />
+          <StatisticsLine text={feedbackOptions[2]} value={badCounter} />
+          <StatisticsLine text={averageText} value={average} />
+          <StatisticsLine
+            text={positiveFeedbackPercantageText}
+            value={positiveFeedbackPercantage}
+          />
+        </tbody>
+      </table>
     </>
   );
 }
