@@ -9,7 +9,7 @@ function Button({ onClick, text }) {
   return <button onClick={onClick}>{text}</button>;
 }
 
-function StatisticsElement({ text, value }) {
+function StatisticsLine({ text, value }) {
   return (
     <p>
       {text} {value}
@@ -29,7 +29,7 @@ function Statistics({
     return (
       <>
         <Title titleText={statisticText} />
-        <StatisticsElement text="No feedback was given" value="" />
+        <StatisticsLine text="No feedback was given" value="" />
       </>
     );
   }
@@ -49,11 +49,11 @@ function Statistics({
   return (
     <>
       <Title titleText={statisticText} />
-      <StatisticsElement text={feedbackOptions[0]} value={goodCounter} />
-      <StatisticsElement text={feedbackOptions[1]} value={neutralCounter} />
-      <StatisticsElement text={feedbackOptions[2]} value={badCounter} />
-      <StatisticsElement text={averageText} value={average} />
-      <StatisticsElement
+      <StatisticsLine text={feedbackOptions[0]} value={goodCounter} />
+      <StatisticsLine text={feedbackOptions[1]} value={neutralCounter} />
+      <StatisticsLine text={feedbackOptions[2]} value={badCounter} />
+      <StatisticsLine text={averageText} value={average} />
+      <StatisticsLine
         text={positiveFeedbackPercantageText}
         value={positiveFeedbackPercantage}
       />
