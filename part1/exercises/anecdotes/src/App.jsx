@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 function Button({ onClick, text }) {
   return <button onClick={onClick}>{text}</button>;
@@ -12,7 +13,7 @@ function AnecdoteSection({ anecdoteTitle, anecdoteText, anecdoteVotes }) {
       {lines.map((line, index) => (
         <p key={index}>{line}</p>
       ))}
-      <p>Votes for this anecdote: {anecdoteVotes}</p>
+      <p style={{ color: "red" }}>Votes for this anecdote: {anecdoteVotes}</p>
     </div>
   );
 }
