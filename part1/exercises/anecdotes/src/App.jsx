@@ -4,6 +4,19 @@ function Button({ onClick, text }) {
   return <button onClick={onClick}>{text}</button>;
 }
 
+function AnecdoteSection({ anecdoteTitle, anecdoteText, anecdoteVotes }) {
+  const lines = anecdoteText.split("\n");
+  return (
+    <div>
+      <h2>{anecdoteTitle}</h2>
+      {lines.map((line, index) => (
+        <p key={index}>{line}</p>
+      ))}
+      <p>Votes for this anecdote: {anecdoteVotes}</p>
+    </div>
+  );
+}
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -19,6 +32,22 @@ const App = () => {
   const initialArray = Array(anecdotes.length).fill(0);
   const [votes, setVotes] = useState(initialArray);
 
+  function getMergedAnecdotesWithMostVotes() {
+    let res = "";
+    let maxVotes = -1;
+
+    for (let i = 0; i < anecdotes.length; i++) {
+      if (votes[i] === maxVotes) {
+        res += "\n" + anecdotes[i];
+      } else if (votes[i] > maxVotes) {
+        res = anecdotes[i];
+        maxVotes = votes[i];
+      }
+    }
+
+    return res;
+  }
+
   function updateRandomAnecdote() {
     const randInd = Math.floor(Math.random() * anecdotes.length);
     setSelected(randInd);
@@ -31,14 +60,20 @@ const App = () => {
   }
 
   return (
-    <div>
-      {anecdotes[selected]}
-      <br />
-      Votes: {votes[selected]}
-      <br />
+    <>
+      <AnecdoteSection
+        anecdoteTitle="Anecdote of the day: "
+        anecdoteText={anecdotes[selected]}
+        anecdoteVotes={votes[selected]}
+      />
       <Button onClick={updateVotesCounter} text="Vote" />
       <Button onClick={updateRandomAnecdote} text="Next Anecdote" />
-    </div>
+      <AnecdoteSection
+        anecdoteTitle="Anecdotes with most votes: "
+        anecdoteText={getMergedAnecdotesWithMostVotes()}
+        anecdoteVotes={Math.max(...votes)}
+      />
+    </>
   );
 };
 
