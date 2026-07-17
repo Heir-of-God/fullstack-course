@@ -20,12 +20,10 @@ function Content({ parts }) {
   );
 }
 
-function Total(props) {
-  let res = 0;
-
-  for (let part of props.parts) {
-    res += part.exercises;
-  }
+function Total({ parts }) {
+  let res = parts.reduce((prev, curPart) => {
+    return prev + curPart.exercises;
+  }, 0);
 
   return <p style={{ fontWeight: "bold" }}>Total number of exercises {res}</p>;
 }
