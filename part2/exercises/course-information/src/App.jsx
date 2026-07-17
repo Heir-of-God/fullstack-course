@@ -27,7 +27,7 @@ function Total(props) {
     res += part.exercises;
   }
 
-  return <p>Number of exercises {res}</p>;
+  return <p style={{ fontWeight: "bold" }}>Total number of exercises {res}</p>;
 }
 
 function Course({ course }) {
@@ -59,6 +59,11 @@ function App() {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
