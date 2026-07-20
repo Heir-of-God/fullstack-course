@@ -1,10 +1,13 @@
-function PhonebookList({ personsToShow }) {
+function PhonebookList({ personsToShow, handleDeleteFunction }) {
   return (
     <div>
       {personsToShow.map((person) => {
         return (
-          <p key={person.name}>
+          <p key={person.id}>
             {person.name} {person.number}
+            <button onClick={() => handleDeleteFunction(person.id)}>
+              Delete
+            </button>
           </p>
         );
       })}

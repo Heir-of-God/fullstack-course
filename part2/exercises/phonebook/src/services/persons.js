@@ -14,4 +14,8 @@ function create(personObject) {
   return axios.post(baseURL, personObject).then(parseData);
 }
 
-export default { getAll, create };
+function deleteEntry(personId) {
+  return axios.delete(baseURL + `/${personId}`).then(parseData);
+}
+
+export default { getAll, create, deleteEntry };
