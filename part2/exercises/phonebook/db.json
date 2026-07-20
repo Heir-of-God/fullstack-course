@@ -24,6 +24,11 @@
       "name": "some name",
       "number": "040-728462",
       "id": "bPWNE-lFJsU"
+    },
+    {
+      "name": "refactor test",
+      "number": "12-41253-52",
+      "id": "QC9rK46HMlE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
