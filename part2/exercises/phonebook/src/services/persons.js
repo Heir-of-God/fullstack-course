@@ -18,4 +18,10 @@ function deleteEntry(personId) {
   return axios.delete(baseURL + `/${personId}`).then(parseData);
 }
 
-export default { getAll, create, deleteEntry };
+function update(personObject) {
+  return axios
+    .put(baseURL + `/${personObject.id}`, personObject)
+    .then(parseData);
+}
+
+export default { getAll, create, deleteEntry, update };

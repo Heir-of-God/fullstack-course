@@ -19,17 +19,33 @@ const App = () => {
   function handleNewNameSubmission(event) {
     event.preventDefault();
 
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
+    const existingEntry = persons.find((person) => person.name === newName);
+
+    if (existingEntry) {
+      const confirmed = confirm(
+        `A number for ${newName} was already added. Update it with new one?`,
+      );
+
+      if (!confirmed) {
+        return;
+      }
+
+      const updatedPersonToPass = { ...existingEntry, number: newNumber };
+
+      personsService.update(updatedPersonToPass).then((updatedPerson) => {
+        const newPersons = persons.map((person) => {
+          return person.id === updatedPerson.id ? updatedPerson : person;
+        });
+        setPersons(newPersons);
+      });
+    } else {
+      const newPerson = { name: newName, number: newNumber };
+
+      personsService.create(newPerson).then((createdPerson) => {
+        const newPersons = persons.concat([createdPerson]);
+        setPersons(newPersons);
+      });
     }
-
-    const newPerson = { name: newName, number: newNumber };
-
-    personsService.create(newPerson).then((createdPerson) => {
-      const newPersons = persons.concat([createdPerson]);
-      setPersons(newPersons);
-    });
 
     setNewName("");
     setNewNumber("");
