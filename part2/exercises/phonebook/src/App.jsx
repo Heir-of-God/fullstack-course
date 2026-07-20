@@ -47,6 +47,20 @@ const App = () => {
     setFilterValue(event.target.value);
   }
 
+  function handleDelete(personId) {
+    const confirmed = confirm(
+      `Are you sure you want to delete ${persons.find((person) => person.id === personId).name}`,
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    personsService.deleteEntry(personId);
+
+    const newPersons = persons.filter((person) => person.id !== personId);
+    setPersons(newPersons);
+  }
+
   const personsToShow = persons.filter((person) => {
     return person.name.toLowerCase().includes(filterValue.toLowerCase());
   });
@@ -67,7 +81,10 @@ const App = () => {
         filterValue={filterValue}
         handleFilterValueChange={handleFilterValueChange}
       />
-      <PhonebookList personsToShow={personsToShow} />
+      <PhonebookList
+        personsToShow={personsToShow}
+        handleDeleteFunction={handleDelete}
+      />
     </div>
   );
 };
