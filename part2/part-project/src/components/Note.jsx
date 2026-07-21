@@ -1,7 +1,7 @@
 const Note = ({ note, toggleImportance }) => {
   return (
     <p>
-      <li style={{ color: note.important ? "red" : "black" }}>
+      <li className="note" style={{ color: note.important ? "red" : "grey" }}>
         {note.content}
       </li>
       <button onClick={toggleImportance}>Change Importance</button>
