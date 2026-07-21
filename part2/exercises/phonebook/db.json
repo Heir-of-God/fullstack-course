@@ -19,6 +19,11 @@
       "name": "New Name",
       "number": "456",
       "id": "iFyLMSOOpnQ"
+    },
+    {
+      "name": "New Record",
+      "number": "1234",
+      "id": "0OD16KmoiOs"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
