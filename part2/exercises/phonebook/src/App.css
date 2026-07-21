@@ -1,4 +1,4 @@
-.notification-success {
+.notification-info {
   color: green;
   border-color: green;
   border-radius: 7px;
@@ -6,6 +6,19 @@
   border-width: px;
   font-size: 18px;
   background-color: rgb(205, 247, 233);
+  padding: 10px;
+  width: 50%;
+  font-weight: bold;
+}
+
+.notification-warn {
+  color: red;
+  border-color: red;
+  border-radius: 7px;
+  border-style: solid;
+  border-width: px;
+  font-size: 18px;
+  background-color: rgb(247, 171, 171);
   padding: 10px;
   width: 50%;
   font-weight: bold;

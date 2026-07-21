@@ -11,13 +11,21 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterValue, setFilterValue] = useState("");
-  const [notificationText, setNotificationText] = useState("");
+  const [notification, setNotification] = useState({
+    text: null,
+    type: "info",
+  }); // type: warn, info
 
   useEffect(() => {
     personsService.getAll().then((initialPersons) => {
       setPersons(initialPersons);
     });
   }, []);
+
+  function updatePersonsWithoutId(idToDelete) {
+    const newPersons = persons.filter((person) => person.id !== idToDelete);
+    setPersons(newPersons);
+  }
 
   function handleNewNameSubmission(event) {
     event.preventDefault();
@@ -30,37 +38,63 @@ const App = () => {
       );
 
       if (!confirmed) {
+        showTimeLimitedNotifications(
+          "info",
+          "Updating person's number was aborted!",
+          3,
+        );
         return;
       }
 
       const updatedPersonToPass = { ...existingEntry, number: newNumber };
 
-      personsService.update(updatedPersonToPass).then((updatedPerson) => {
-        const newPersons = persons.map((person) => {
-          return person.id === updatedPerson.id ? updatedPerson : person;
+      personsService
+        .update(updatedPersonToPass)
+        .then((updatedPerson) => {
+          const newPersons = persons.map((person) => {
+            return person.id === updatedPerson.id ? updatedPerson : person;
+          });
+          setPersons(newPersons);
+          showTimeLimitedNotifications(
+            "info",
+            `A number for ${newName} was successfully updated!`,
+            3,
+          );
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch(() => {
+          showTimeLimitedNotifications(
+            "warn",
+            `The person ${newName} doesn't exist!`,
+            3,
+          );
+          updatePersonsWithoutId(updatedPersonToPass.id);
         });
-        setPersons(newPersons);
-      });
-      showTimeLimitedNotifications(
-        `A number for ${newName} was successfully updated!`,
-        3,
-      );
     } else {
       const newPerson = { name: newName, number: newNumber };
 
-      personsService.create(newPerson).then((createdPerson) => {
-        const newPersons = persons.concat([createdPerson]);
-        setPersons(newPersons);
-      });
-
-      showTimeLimitedNotifications(
-        `New record for ${newName} was successfully added!`,
-        3,
-      );
+      personsService
+        .create(newPerson)
+        .then((createdPerson) => {
+          const newPersons = persons.concat([createdPerson]);
+          setPersons(newPersons);
+          showTimeLimitedNotifications(
+            "info",
+            `New record for ${newName} was successfully added!`,
+            3,
+          );
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch(() => {
+          showTimeLimitedNotifications(
+            "warn",
+            `An error occured while adding ${newName}!`,
+            3,
+          );
+        });
     }
-
-    setNewName("");
-    setNewNumber("");
   }
 
   function handleNewNameChange(event) {
@@ -81,24 +115,37 @@ const App = () => {
       `Are you sure you want to delete ${personToDelete.name}`,
     );
     if (!confirmed) {
+      showTimeLimitedNotifications("info", "Person deletion was cancelled!", 3);
       return;
     }
 
-    personsService.deleteEntry(personId);
-
-    const newPersons = persons.filter((person) => person.id !== personId);
-    setPersons(newPersons);
-
-    showTimeLimitedNotifications(
-      `Record for ${personToDelete.name} was successfully deleted!`,
-      3,
-    );
+    personsService
+      .deleteEntry(personId)
+      .then(() => {
+        showTimeLimitedNotifications(
+          "info",
+          `Record for ${personToDelete.name} was successfully deleted!`,
+          3,
+        );
+        updatePersonsWithoutId(personId);
+      })
+      .catch(() => {
+        showTimeLimitedNotifications(
+          "warn",
+          `Record for ${personToDelete.name} doesn't exist already!`,
+          3,
+        );
+        updatePersonsWithoutId(personId);
+      });
   }
 
-  function showTimeLimitedNotifications(message, seconds) {
-    setNotificationText(message);
+  function showTimeLimitedNotifications(type, text, seconds) {
+    setNotification({ text: text, type: type });
     const milliseconds = seconds * 1000;
-    setTimeout(() => setNotificationText(""), milliseconds);
+    setTimeout(
+      () => setNotification({ text: null, type: "info" }),
+      milliseconds,
+    );
   }
 
   const personsToShow = persons.filter((person) => {
@@ -108,7 +155,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={notificationText} />
+      <Notification message={notification} />
       <h2>add new</h2>
       <NewPersonForm
         newName={newName}
