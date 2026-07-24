@@ -1,5 +1,6 @@
 import CountryFlag from "./CountryFlag";
 import CountryGeneralInformation from "./CountryGeneralInformation";
+import CapitalWeather from "./CapitalWeather";
 
 function Country({ country }) {
   return (
@@ -9,6 +10,7 @@ function Country({ country }) {
       </h1>
       <CountryFlag country={country} />
       <CountryGeneralInformation country={country} />
+      <CapitalWeather country={country} />
     </div>
   );
 }
