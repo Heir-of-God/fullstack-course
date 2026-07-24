@@ -13,13 +13,24 @@ function App() {
     setInputText(newText);
 
     countriesService.getAllCountries().then((data) => {
-      const names = data.filter((country) => {
+      const countries = data.filter((country) => {
         return (
           country.name.official.toLowerCase().includes(newText.toLowerCase()) ||
           country.name.common.toLowerCase().includes(newText.toLowerCase())
         );
       });
-      setCountries(names);
+
+      for (const country of countries) {
+        if (
+          country.name.common.toLowerCase() === newText.toLowerCase() ||
+          country.name.official.toLowerCase() === newText.toLowerCase()
+        ) {
+          setCountries([country]);
+          return;
+        }
+      }
+
+      setCountries(countries);
     });
   }
 
