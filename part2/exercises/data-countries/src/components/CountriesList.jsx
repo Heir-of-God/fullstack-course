@@ -1,4 +1,4 @@
-function CountriesList({ countries }) {
+function CountriesList({ countries, chooseCountryButtonOnClick }) {
   if (countries.length === 0) {
     return <div>No matches, specify another filter</div>;
   }
@@ -10,7 +10,16 @@ function CountriesList({ countries }) {
   return (
     <div>
       {countries.map((country) => {
-        return <p key={country.name.common}>{country.name.common}</p>;
+        return (
+          <p key={country.name.common}>
+            {country.name.common}{" "}
+            <button
+              onClick={() => chooseCountryButtonOnClick(country.name.common)}
+            >
+              Show
+            </button>
+          </p>
+        );
       })}
     </div>
   );
