@@ -1,7 +1,12 @@
 const express = require("express");
+const morgan = require("morgan");
+
 const app = express();
 
 app.use(express.json());
+
+const loggerMiddleware = morgan("tiny");
+app.use(loggerMiddleware);
 
 let persons = [
   {
