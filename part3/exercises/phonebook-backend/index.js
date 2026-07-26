@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 let persons = [
   {
     id: "1",
@@ -24,6 +26,16 @@ let persons = [
   },
 ];
 
+function getNewId() {
+  let newId;
+
+  do {
+    newId = Math.ceil(Math.random() * 10000 + 1);
+  } while (persons.find((person) => person.id === newId));
+
+  return newId;
+}
+
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
@@ -45,6 +57,25 @@ app.get("/info", (request, response) => {
   response.send(
     `Phonebook has info for ${persons.length} people<br/>${dateString}`,
   );
+});
+
+app.post("/api/persons", (request, response) => {
+  const newPersonData = request.body;
+
+  if (!newPersonData.number || !newPersonData.name) {
+    response.status(422).end();
+    return;
+  }
+
+  const newPerson = {
+    id: getNewId().toString(),
+    name: newPersonData.name,
+    number: newPersonData.number,
+  };
+
+  persons.push(newPerson);
+
+  response.json(newPerson);
 });
 
 app.delete("/api/persons/:id", (request, response) => {
