@@ -5,7 +5,12 @@ const app = express();
 
 app.use(express.json());
 
-const loggerMiddleware = morgan("tiny");
+morgan.token("body-content", function (req, res) {
+  return JSON.stringify(req.body);
+});
+const loggerMiddleware = morgan(
+  `:method :url :status :res[content-length] - :response-time ms :body-content`,
+);
 app.use(loggerMiddleware);
 
 let persons = [
