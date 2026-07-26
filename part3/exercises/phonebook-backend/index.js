@@ -63,7 +63,19 @@ app.post("/api/persons", (request, response) => {
   const newPersonData = request.body;
 
   if (!newPersonData.number || !newPersonData.name) {
-    response.status(422).end();
+    response
+      .status(422)
+      .json({ error: 'Fields "name" and "number" mustn\'t be empty!' });
+    return;
+  }
+
+  const conflictPerson = persons.find(
+    (person) => person.name === newPersonData.name,
+  );
+  if (conflictPerson) {
+    response.status(409).json({
+      error: `Record with "name = ${newPersonData.name}" already exists with"id = ${conflictPerson.id}"!`,
+    });
     return;
   }
 
