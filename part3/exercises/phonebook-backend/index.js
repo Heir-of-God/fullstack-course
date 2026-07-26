@@ -28,6 +28,17 @@ app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
 
+app.get("/api/persons/:id", (request, response) => {
+  const requestedId = request.params.id;
+  const requestedPerson = persons.find((person) => person.id == requestedId);
+
+  if (!requestedPerson) {
+    response.status(404).end();
+  } else {
+    response.json(requestedPerson);
+  }
+});
+
 app.get("/info", (request, response) => {
   const date = new Date();
   const dateString = date.toString();
