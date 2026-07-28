@@ -1,7 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 
 let notes = [
   {
@@ -17,6 +23,11 @@ let notes = [
   {
     id: "3",
     content: "GET and POST are the most important methods of HTTP protocol",
+    important: true,
+  },
+  {
+    id: "4",
+    content: "dfadl",
     important: true,
   },
 ];
@@ -78,7 +89,7 @@ app.post("/api/notes", (request, response) => {
   response.json(note);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
